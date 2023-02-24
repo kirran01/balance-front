@@ -17,13 +17,14 @@ const Login = () => {
     }
     const login = (e) => {
         e.preventDefault()
-        axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, {
+        axios.post(`http://localhost:3000/auth/login`, {
             username: loginInput.loginName,
             password: loginInput.loginPassword
         })
             .then(res => {
                 storeToken(res.data.authToken)
                 authenticateUser()
+                navigate('/')
             })
             .catch(err => {
                 console.log(err)
@@ -44,7 +45,7 @@ const Login = () => {
                     <label className='m-2'>Username</label>
                     <input className='border-gray border-2 rounded-md m-2' onChange={handleLoginInput} value={loginInput.loginName} name="loginName" type="text" />
                     <label className='m-2'>Password</label>
-                    <input className='border-gray border-2 rounded-md m-2' onChange={handleLoginInput} value={loginInput.loginPassword} name="loginPassword" type="password" />
+                    <input className='border-gray border-2 rounded-md m-2' onChange={handleLoginInput} value={loginInput.loginPassword} name="loginPassword" type="text" />
                     <button className='bg-cyan-800 hover:bg-cyan-700 p-2 m-5 text-white rounded-md' onClick={login} >Log In</button>
                 </form>
             </div>

@@ -16,6 +16,9 @@ const Nav = () => {
                     <li>
                         <HomeIcon onClick={() => { navigate('/') }} sx={{ color: 'white', margin: '0px 8px 0px', cursor: 'pointer' }} />
                     </li>
+                    <Link className='text-white'>
+                    Employees
+                    </Link>
                 </div>
                 <li onClick={logOut} className='text-white cursor-pointer'>
                     Log Out
