@@ -16,7 +16,7 @@ const Nav = () => {
                     <li>
                         <HomeIcon onClick={() => { navigate('/') }} sx={{ color: 'white', margin: '0px 8px 0px', cursor: 'pointer' }} />
                     </li>
-                    <Link className='text-white'>
+                    <Link className='text-white' to={'/employees'}>
                     Employees
                     </Link>
                 </div>

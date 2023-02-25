@@ -6,7 +6,7 @@ import Nav from './components/nav';
 import Home from './pages/home';
 import Login from './pages/login';
 import './App.css'
-import Employee from './pages/employee';
+import Employees from './pages/employees';
 
 function App() {
 
@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/employee/:id' element={<Employee />} />
+        <Route path='/employees' element={<Employees />} />
       </Routes>
     </div>
   )
