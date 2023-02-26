@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Preview from '../components/preview';
 import { useState, useEffect } from 'react';
 
 const Employees = () => {
@@ -22,9 +23,19 @@ const Employees = () => {
         }
         getEmployees()
     }, [])
+    console.log(employees, 'e')
     return (
-        <div>
-            employees
+        <div className='flex flex-col items-center p-3'>
+            <h1 className='text-3xl'>Employees</h1>
+            <div>
+                {
+                    employees.map(e => {
+                        return (
+                            <Preview key={e._id} employee={e} />
+                        )
+                    })
+                }
+            </div>
         </div>
     );
 }
