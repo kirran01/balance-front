@@ -1,6 +1,8 @@
 import React from 'react';
 import Createtable from '../components/createtable';
+import Modal from 'react-modal';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ClearIcon from '@mui/icons-material/Clear';
 import { useNavigate } from "react-router-dom";
 import Prevtable from '../components/prevtable';
 import { useState, useEffect } from 'react';
@@ -8,11 +10,34 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const Oneemployee = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
+    const [extendEdit, setExtendEdit] = useState('')
+    const [fieldToEdit, setFieldToEdit] = useState('')
+    const [userEditInput, setUserEditInput] = useState('')
     const [employee, setEmployee] = useState({})
     const [tables, setTables] = useState([])
     const [show, setShow] = useState('')
-    const { id } = useParams();
+    const [modalIsOpen, setIsOpen] = useState(false);
+    function openModal() {
+        setIsOpen(true);
+    }
+    function closeModal() {
+        setIsOpen(false);
+    }
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            borderRadius: '30px',
+            transform: 'translate(-50%, -50%)',
+            marginTop: '35px',
+            zIndex: 1
+        },
+    }
+
     useEffect(() => {
         const getEmployees = async () => {
             try {
@@ -52,6 +77,24 @@ const Oneemployee = () => {
         getTables()
     }, [])
     const editEmployee = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await axios.put(`http://localhost:3000/employee/edit-employee/${id}`, {
+                [fieldToEdit]: userEditInput
+            }, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('authToken')}`
+                }
+            })
+            if (res) {
+                console.log(res.data, 'rdedit')
+                setExtendEdit('')
+                setUserEditInput('')
+                setFieldToEdit('')
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
     const deleteEmployee = async (e) => {
         e.preventDefault()
@@ -92,16 +135,44 @@ const Oneemployee = () => {
                 </div>
             </div>
             <div className='flex items-center flex-col'>
-                <button className='p-2 bg-slate-100 rounded-lg m-2' type="">Edit</button>
-                <div>
-                    <button className='p-2 bg-slate-50 rounded-md mx-1'>First Name</button>
-                    <button className='p-2 bg-slate-50 rounded-md mx-1'>Last Name</button>
-                    <button className='p-2 bg-slate-50 rounded-md mx-1'>Email</button>
-                    <button className='p-2 bg-slate-50 rounded-md mx-1'>Phone</button>
-                    <button className='p-2 bg-slate-50 rounded-md mx-1'>Image</button>
-                    <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={deleteEmployee}>Delete</button>
-                    <button className='p-2 bg-slate-50 rounded-md mx-1'>Cancel</button>
-                </div>
+                <button className='p-2 bg-slate-100 rounded-lg m-2' onClick={() => { setExtendEdit('open') }}>Edit</button>
+                {
+                    extendEdit === 'open' &&
+                    <div className='m-2'>
+                        <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={() => {
+                            setExtendEdit('open-input')
+                            setFieldToEdit('firstName')
+                        }}>First Name</button>
+                        <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={() => {
+                            setExtendEdit('open-input')
+                            setFieldToEdit('lastName')
+                        }}>Last Name</button>
+                        <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={() => {
+                            setExtendEdit('open-input')
+                            setFieldToEdit('email')
+                        }}>Email</button>
+                        <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={() => {
+                            setExtendEdit('open-input')
+                            setFieldToEdit('phone')
+                        }}>Phone</button>
+                        <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={() => {
+                            setExtendEdit('open-input')
+                            setFieldToEdit('image')
+                        }}>Image</button>
+                        <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={openModal}>Delete</button>
+                        <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={() => { setExtendEdit('') }}>Cancel</button>
+                    </div>
+                }
+                {
+                    extendEdit === 'open-input' &&
+                    <form className='flex items-center'>
+                        <input className='border-2 border-slate-100 rounded-lg m-2' type="text" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }}  />
+                        <button className='p-2 bg-slate-100 rounded-md'>Submit</button>
+                        <div>
+                            <ClearIcon style={{ cursor: 'pointer' }} onClick={() => { setExtendEdit('') }} />
+                        </div>
+                    </form>
+                }
             </div>
             <div>
                 <button className='p-2 bg-slate-100 rounded-lg' onClick={() => { setShow('create-table') }}>New Table</button>
@@ -121,6 +192,17 @@ const Oneemployee = () => {
                     })
                 }
             </div>
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={customStyles}
+                ariaHideApp={false}
+            >
+                <div className='flex flex-col items-center p-3'>
+                    <p className='text-center'>Are you sure you want to delete {employee.firstName} {employee.lastName}?</p>
+                    <button className='bg-red-300 hover:bg-red-400 p-2 rounded-lg m-2' onClick={deleteEmployee}>Yes, Delete</button>
+                </div>
+            </Modal>
         </div>
     );
 }
