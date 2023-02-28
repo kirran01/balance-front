@@ -10,33 +10,37 @@ import Employees from './pages/employees';
 import Oneemployee from './pages/oneemployee';
 
 function App() {
-//   useEffect(() => {
-//     const getEmployees = async () => {
-//         try {
-//             const res = await axios.get(`http://localhost:3000/employee/get-employees`, {
-//                 headers: {
-//                     authorization: `Bearer ${localStorage.getItem('authToken')}`
-//                 }
-//             })
-//             if (res) {
-//                 const gotEmployees = res.data
-//                 setEmployees(gotEmployees)
-//             }
-//         } catch (err) {
-//             console.log(err)
-//         }
-//     }
-//     getEmployees()
-// }, [])
-const [employees, setEmployees] = useState([])
-
+  const [employees, setEmployees] = useState([])
+  const [searchEmlpoyees, setSearchEmployees] = useState([])
+  const updateSearch = (updatedSearches) => {
+    setSearchEmployees(updatedSearches)
+  }
+  useEffect(() => {
+    const getEmployees = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/employee/get-employees`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('authToken')}`
+          }
+        })
+        if (res) {
+          const gotEmployees = res.data
+          setEmployees(gotEmployees)
+          setSearchEmployees(gotEmployees)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getEmployees()
+  }, [])
   return (
     <div className="App">
       <Nav />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/employees' element={<Employees />} />
+        <Route path='/employees' element={<Employees employees={employees} searchEmployees={searchEmlpoyees} setSearchEmployees={setSearchEmployees} setEmployees={setEmployees} updateSearch={updateSearch} />} />
         <Route path='/employee/:id' element={<Oneemployee />} />
       </Routes>
     </div>
