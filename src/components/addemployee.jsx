@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import Employees from '../pages/employees';
 
-const Addemployee = ({ handleAddEmployee }) => {
+const Addemployee = ({ handleAddEmployee, searchEmployees, setSearchEmployees}) => {
 
     const [newEmployeeInput, setNewEmployeeInput] = useState({
         firstName: '',
@@ -29,6 +30,8 @@ const Addemployee = ({ handleAddEmployee }) => {
             if (res) {
                 let newEmployee = res.data
                 console.log(newEmployee, 'new employee')
+                setSearchEmployees([...searchEmployees, newEmployee])
+                handleAddEmployee()
             }
         } catch (err) {
             console.log(err)

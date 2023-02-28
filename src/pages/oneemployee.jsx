@@ -1,12 +1,14 @@
 import React from 'react';
 import Createtable from '../components/createtable';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useNavigate } from "react-router-dom";
 import Prevtable from '../components/prevtable';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const Oneemployee = () => {
+    const navigate = useNavigate();
     const [employee, setEmployee] = useState({})
     const [tables, setTables] = useState([])
     const [show, setShow] = useState('')
@@ -49,9 +51,23 @@ const Oneemployee = () => {
         }
         getTables()
     }, [])
-    const editEmployee = (e) => {
+    const editEmployee = async (e) => {
     }
-    const deleteEmployee = (e) => {
+    const deleteEmployee = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await axios.delete(`http://localhost:3000/employee/delete-employee/${id}`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('authToken')}`
+                }
+            })
+            if (res) {
+                console.log('deleted')
+                navigate('/')
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
     return (
         <div className='flex flex-col items-center p-3'>
@@ -73,6 +89,18 @@ const Oneemployee = () => {
                 <div className='m-2'>
                     <p className='text-center text-md'>{employee.email}</p>
                     <p className='text-center text-md'>{employee.phone}</p>
+                </div>
+            </div>
+            <div className='flex items-center flex-col'>
+                <button className='p-2 bg-slate-100 rounded-lg m-2' type="">Edit</button>
+                <div>
+                    <button className='p-2 bg-slate-50 rounded-md mx-1'>First Name</button>
+                    <button className='p-2 bg-slate-50 rounded-md mx-1'>Last Name</button>
+                    <button className='p-2 bg-slate-50 rounded-md mx-1'>Email</button>
+                    <button className='p-2 bg-slate-50 rounded-md mx-1'>Phone</button>
+                    <button className='p-2 bg-slate-50 rounded-md mx-1'>Image</button>
+                    <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={deleteEmployee}>Delete</button>
+                    <button className='p-2 bg-slate-50 rounded-md mx-1'>Cancel</button>
                 </div>
             </div>
             <div>

@@ -4,7 +4,7 @@ import Preview from '../components/preview';
 import { useState, useEffect } from 'react';
 import Addemployee from '../components/addemployee';
 
-const Employees = ({ employees, updateSearch, searchEmployees, getEmployees }) => {
+const Employees = ({ employees, updateSearch, searchEmployees, setSearchEmployees, getEmployees }) => {
     const [show, setShow] = useState('')
     const handleAddEmployee = () => {
         if (show === '') {
@@ -31,13 +31,13 @@ const Employees = ({ employees, updateSearch, searchEmployees, getEmployees }) =
             </div>
             {
                 show === 'add-employee' &&
-                <Addemployee handleAddEmployee={handleAddEmployee} />
+                <Addemployee handleAddEmployee={handleAddEmployee} searchEmployees={searchEmployees} setSearchEmployees={setSearchEmployees} />
             }
             <div>
                 {
                     searchEmployees.map(e => {
                         return (
-                            <Preview key={e._id} employee={e} />
+                            <Preview key={e._id} employee={e}  />
                         )
                     })
                 }
