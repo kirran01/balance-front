@@ -15,15 +15,24 @@ const Createtable = ({ setShow, id }) => {
     const handleTableInput = (e) => {
         setTableInput({ ...tableInput, [e.target.name]: e.target.value })
     }
-
+    console.log(id, 'id')
     const createTable = async (e) => {
         e.preventDefault()
         try {
             const res = await axios.post(`http://localhost:3000/table/create-table/${id}`, {
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('authToken')}`
-                }
-            })
+                regularEarnings: tableInput.regularEarnings,
+                overtimeOne: tableInput.overTime1,
+                overtimeTwo: tableInput.overTime2,
+                paye: tableInput.paye,
+                nationalInsurance: tableInput.nationalInsurance,
+                healthSurcharge: tableInput.healthSurcharge,
+                other: tableInput.other
+            },
+                {
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem('authToken')}`
+                    }
+                })
             if (res) {
                 console.log(res.data, 'rdnewTable')
             }
@@ -55,10 +64,10 @@ const Createtable = ({ setShow, id }) => {
                         <input className='border-2' type="number" value={tableInput.other} name="other" onChange={handleTableInput} />
                     </div>
                 </div>
-                <button className='p-2 bg-slate-100 rounded-lg m-2'>Submit</button>
-                <button onClick={() => { setShow('') }}>cancel</button>
+                <button className='p-2 bg-slate-100 rounded-lg m-2' type='submit'>Submit</button>
+                {/* <button onClick={() => { setShow('') }}>cancel</button> */}
             </form>
-       
+
         </div>
     );
 }
