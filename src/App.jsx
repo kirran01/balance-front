@@ -10,6 +10,25 @@ import Employees from './pages/employees';
 import Oneemployee from './pages/oneemployee';
 
 function App() {
+//   useEffect(() => {
+//     const getEmployees = async () => {
+//         try {
+//             const res = await axios.get(`http://localhost:3000/employee/get-employees`, {
+//                 headers: {
+//                     authorization: `Bearer ${localStorage.getItem('authToken')}`
+//                 }
+//             })
+//             if (res) {
+//                 const gotEmployees = res.data
+//                 setEmployees(gotEmployees)
+//             }
+//         } catch (err) {
+//             console.log(err)
+//         }
+//     }
+//     getEmployees()
+// }, [])
+const [employees, setEmployees] = useState([])
 
   return (
     <div className="App">

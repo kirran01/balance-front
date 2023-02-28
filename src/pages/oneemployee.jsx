@@ -1,6 +1,7 @@
 import React from 'react';
 import Createtable from '../components/createtable';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Prevtable from '../components/prevtable';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -50,7 +51,6 @@ const Oneemployee = () => {
         getTables()
     }, [])
 
-
     return (
         <div className='flex flex-col items-center p-3'>
             <div>
@@ -69,11 +69,20 @@ const Oneemployee = () => {
             <div>
                 <button className='p-2 bg-slate-100 rounded-lg' onClick={() => { setShow('create-table') }}>New Table</button>
             </div>
-            {show === 'create-table' && <div>
-                <Createtable setShow={setShow} id={id} />
-            </div>}
+            {
+                show === 'create-table' &&
+                <div>
+                    <Createtable setShow={setShow} id={id} />
+                </div>
+            }
             <div>
-
+                {
+                    tables.map(t => {
+                        return (
+                            <Prevtable key={t._id} table={t} />
+                        )
+                    })
+                }
             </div>
         </div>
     );
