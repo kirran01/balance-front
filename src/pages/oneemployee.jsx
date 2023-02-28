@@ -30,7 +30,6 @@ const Oneemployee = () => {
         }
         getEmployees()
     }, [])
-
     useEffect(() => {
         const getTables = async () => {
             try {
@@ -49,8 +48,13 @@ const Oneemployee = () => {
             }
         }
         getTables()
-    }, [])
+    }, []) 
+    const editEmployee=(e)=>{
 
+    }
+    const deleteEmployee=(e)=>{
+
+    }
     return (
         <div className='flex flex-col items-center p-3'>
             <div>

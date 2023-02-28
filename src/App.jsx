@@ -15,23 +15,23 @@ function App() {
   const updateSearch = (updatedSearches) => {
     setSearchEmployees(updatedSearches)
   }
-  useEffect(() => {
-    const getEmployees = async () => {
-      try {
-        const res = await axios.get(`http://localhost:3000/employee/get-employees`, {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem('authToken')}`
-          }
-        })
-        if (res) {
-          const gotEmployees = res.data
-          setEmployees(gotEmployees)
-          setSearchEmployees(gotEmployees)
+  const getEmployees = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3000/employee/get-employees`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('authToken')}`
         }
-      } catch (err) {
-        console.log(err)
+      })
+      if (res) {
+        const gotEmployees = res.data
+        setEmployees(gotEmployees)
+        setSearchEmployees(gotEmployees)
       }
+    } catch (err) {
+      console.log(err)
     }
+  }
+  useEffect(() => {
     getEmployees()
   }, [])
   return (
@@ -40,7 +40,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/employees' element={<Employees employees={employees} searchEmployees={searchEmlpoyees} setSearchEmployees={setSearchEmployees} setEmployees={setEmployees} updateSearch={updateSearch} />} />
+        <Route path='/employees' element={<Employees getEmployees={getEmployees} employees={employees} searchEmployees={searchEmlpoyees} setSearchEmployees={setSearchEmployees} setEmployees={setEmployees} updateSearch={updateSearch} />} />
         <Route path='/employee/:id' element={<Oneemployee />} />
       </Routes>
     </div>
