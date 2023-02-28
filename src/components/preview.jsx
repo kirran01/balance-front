@@ -4,14 +4,13 @@ import { Link } from 'react-router-dom';
 
 const Preview = ({ employee }) => {
     return (
-        <div className='border-2 rounded-lg'>
-            <Link className='flex' to={`/employee/${employee._id}`}>
+        <div className='border-2 rounded-lg m-3'>
+            <Link className='flex items-center' to={`/employee/${employee._id}`}>
                 <div>
                     <AccountCircleIcon />
                 </div>
                 <div className='flex'>
-                    <p className='mx-1'>{employee.firstName}</p>
-                    <p className='mx-1'>{employee.lastName}</p>
+                    <p className='mx-1'>{employee.firstName} {employee.lastName}</p>
                 </div>
             </Link>
         </div>

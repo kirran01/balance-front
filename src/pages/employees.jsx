@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Preview from '../components/preview';
+
 import { useState, useEffect } from 'react';
 
 const Employees = () => {
@@ -21,6 +22,7 @@ const Employees = () => {
                 firstName: newEmployeeInput.firstName,
                 lastName: newEmployeeInput.lastName,
                 email: newEmployeeInput.email,
+                phone: newEmployeeInput.phone,
                 image: newEmployeeInput.image
             }, {
                 headers: {
@@ -34,7 +36,6 @@ const Employees = () => {
         } catch (err) {
             console.log(err)
         }
-
     }
 
     const handleNewEmployeeInput = (e) => {
@@ -73,7 +74,7 @@ const Employees = () => {
         <div className='flex flex-col items-center p-3'>
             <p className='text-4xl m-5'>Employees</p>
             <div className='m-2'>
-                <button className='p-2 bg-slate-100 rounded-lg' onClick={handleAddEmployee}>Add New Employee</button>
+                <button className='p-2 bg-slate-100 rounded-lg border-2 ' onClick={handleAddEmployee}>Add New Employee</button>
             </div>
             {show === 'add-employee' && <div className='m-2 border-2 rounded-lg p-5 flex flex-col items-center'>
                 <form className='flex flex-col items-center' onSubmit={addEmployee}>
@@ -82,9 +83,9 @@ const Employees = () => {
                     <label>Last Name</label>
                     <input className='border-2' type="text" value={newEmployeeInput.lastName} onChange={handleNewEmployeeInput} name="lastName" />
                     <label>Email</label>
-                    <input className='border-2' type="text" value={newEmployeeInput.email} onChange={handleNewEmployeeInput} name="email" />
+                    <input className='border-2' type="email" value={newEmployeeInput.email} onChange={handleNewEmployeeInput} name="email" />
                     <label>Phone</label>
-                    <input className='border-2' type="text" value={newEmployeeInput.phone} onChange={handleNewEmployeeInput} name="phone" />
+                    <input className='border-2' type="number" value={newEmployeeInput.phone} onChange={handleNewEmployeeInput} name="phone" />
                     <label>Image</label>
                     <input className='border-2' type="text" value={newEmployeeInput.image} onChange={handleNewEmployeeInput} name="image" />
                     <button className='bg-green-300 border-2 border-green-400 rounded-lg m-2 p-3'>Submit</button>
