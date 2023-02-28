@@ -51,9 +51,9 @@ const Addemployee = ({ handleAddEmployee }) => {
                 <input className='border-2' type="number" value={newEmployeeInput.phone} onChange={handleNewEmployeeInput} name="phone" />
                 <label>Image</label>
                 <input className='border-2' type="text" value={newEmployeeInput.image} onChange={handleNewEmployeeInput} name="image" />
-                <button className='bg-green-300 border-2 border-green-400 rounded-lg m-2 p-3'>Submit</button>
+                <button className='bg-green-300 border-2 border-green-400 hover:bg-green-400 rounded-lg m-2 p-3'>Submit</button>
             </form>
-            <button className='bg-red-300 border-2 border-red-400 p-1 rounded-lg' type="text" onClick={handleAddEmployee}>Cancel</button>
+            <button className='bg-red-300 border-2 border-red-400 hover:bg-red-400 p-1 rounded-lg' type="text" onClick={handleAddEmployee}>Cancel</button>
         </div>
     );
 }

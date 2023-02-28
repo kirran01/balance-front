@@ -48,18 +48,23 @@ const Oneemployee = () => {
             }
         }
         getTables()
-    }, []) 
-    const editEmployee=(e)=>{
-
+    }, [])
+    const editEmployee = (e) => {
     }
-    const deleteEmployee=(e)=>{
-
+    const deleteEmployee = (e) => {
     }
     return (
         <div className='flex flex-col items-center p-3'>
-            <div>
-                <AccountCircleIcon />
-            </div>
+            {
+                employee.image ?
+                    <div>
+                        <img className="w-32 h-32 object-cover rounded-full" src={employee.image} alt="img" />
+                    </div>
+                    :
+                    <div>
+                        <AccountCircleIcon sx={{ fontSize: 120 }} />
+                    </div>
+            }
             <div>
                 <div className='m-2'>
                     <p className='text-center text-2xl'>{employee.firstName}</p>

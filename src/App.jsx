@@ -3,7 +3,7 @@ import { AuthContext } from './context/auth.context';
 import axios from 'axios'
 import { Route, Routes } from 'react-router-dom'
 import Nav from './components/nav';
-import Home from './pages/home';
+import Foot from './components/foot';
 import Login from './pages/login';
 import './App.css'
 import Employees from './pages/employees';
@@ -38,9 +38,8 @@ function App() {
     <div className="App">
       <Nav />
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Employees getEmployees={getEmployees} employees={employees} searchEmployees={searchEmlpoyees} setSearchEmployees={setSearchEmployees} setEmployees={setEmployees} updateSearch={updateSearch} />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/employees' element={<Employees getEmployees={getEmployees} employees={employees} searchEmployees={searchEmlpoyees} setSearchEmployees={setSearchEmployees} setEmployees={setEmployees} updateSearch={updateSearch} />} />
         <Route path='/employee/:id' element={<Oneemployee />} />
       </Routes>
     </div>

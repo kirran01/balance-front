@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Prevtable = ({ table }) => {
-    console.log(table, 't')
     return (
         <div className='flex border-2 border-slate-100 rounded-lg m-2 p-2'>
             <div className='m-2'>
