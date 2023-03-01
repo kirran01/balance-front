@@ -1,8 +1,8 @@
 import React from 'react';
 import Createtable from '../components/createtable';
 import Modal from 'react-modal';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ClearIcon from '@mui/icons-material/Clear';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from "react-router-dom";
 import Prevtable from '../components/prevtable';
 import { useState, useEffect } from 'react';
@@ -36,6 +36,13 @@ const Oneemployee = () => {
             marginTop: '35px',
             zIndex: 1
         },
+    }
+    const handleExtendEdit = () => {
+        if (extendEdit == '') {
+            setExtendEdit('open')
+        } else {
+            setExtendEdit('')
+        }
     }
 
     useEffect(() => {
@@ -135,10 +142,10 @@ const Oneemployee = () => {
                 </div>
             </div>
             <div className='flex items-center flex-col'>
-                <button className='p-2 bg-slate-100 rounded-lg m-2' onClick={() => { setExtendEdit('open') }}>Edit</button>
+                <button className='p-2 bg-slate-100 rounded-lg m-2' onClick={handleExtendEdit}>Edit</button>
                 {
                     extendEdit === 'open' &&
-                    <div className='m-2'>
+                    <div className='flex items-center justify-center flex-wrap m-2'>
                         <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={() => {
                             setExtendEdit('open-input')
                             setFieldToEdit('firstName')
@@ -160,16 +167,16 @@ const Oneemployee = () => {
                             setFieldToEdit('image')
                         }}>Image</button>
                         <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={openModal}>Delete</button>
-                        <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={() => { setExtendEdit('') }}>Cancel</button>
+                        <ClearIcon sx={{ padding: '2px', backgroundColor: 'gray' }} onClick={handleExtendEdit} />
                     </div>
                 }
                 {
                     extendEdit === 'open-input' &&
-                    <form className='flex items-center'>
-                        <input className='border-2 border-slate-100 rounded-lg m-2' type="text" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }}  />
+                    <form className='flex items-center' onSubmit={editEmployee}>
+                        <input className='border-2 border-slate-100 rounded-lg m-2' type="text" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }} />
                         <button className='p-2 bg-slate-100 rounded-md'>Submit</button>
                         <div>
-                            <ClearIcon style={{ cursor: 'pointer' }} onClick={() => { setExtendEdit('') }} />
+                            <ClearIcon style={{ cursor: 'pointer' }} onClick={handleExtendEdit} />
                         </div>
                     </form>
                 }
