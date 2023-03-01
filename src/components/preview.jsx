@@ -13,7 +13,7 @@ const Preview = ({ employee }) => {
                     </div>
                     :
                     <div>
-                        <AccountCircleIcon/>
+                        <AccountCircleIcon sx={{fontSize:'32px'}}/>
                     </div>
             }
                 <div className='flex'>

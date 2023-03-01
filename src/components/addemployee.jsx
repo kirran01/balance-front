@@ -3,8 +3,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import Employees from '../pages/employees';
 
-const Addemployee = ({ handleAddEmployee, searchEmployees, setSearchEmployees}) => {
-
+const Addemployee = ({ handleAddEmployee, searchEmployees, setSearchEmployees }) => {
+    const [errorMessage, setErrorMessage] = useState('')
     const [newEmployeeInput, setNewEmployeeInput] = useState({
         firstName: '',
         lastName: '',
@@ -35,6 +35,10 @@ const Addemployee = ({ handleAddEmployee, searchEmployees, setSearchEmployees}) 
             }
         } catch (err) {
             console.log(err)
+            if (err.response.data) {
+                let error = err.response.data
+                setErrorMessage(error)
+            }
         }
     }
 
@@ -43,6 +47,7 @@ const Addemployee = ({ handleAddEmployee, searchEmployees, setSearchEmployees}) 
     }
     return (
         <div className='m-2 border-2 rounded-lg p-5 flex flex-col items-center'>
+            {errorMessage}
             <form className='flex flex-col items-center' onSubmit={addEmployee}>
                 <label>First Name</label>
                 <input className='border-2' type="text" value={newEmployeeInput.firstName} onChange={handleNewEmployeeInput} name="firstName" />

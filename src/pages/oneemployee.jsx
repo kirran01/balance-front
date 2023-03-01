@@ -8,6 +8,7 @@ import Prevtable from '../components/prevtable';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { borderRadius } from '@mui/system';
 
 const Oneemployee = () => {
     const { id } = useParams();
@@ -94,7 +95,8 @@ const Oneemployee = () => {
                 }
             })
             if (res) {
-                console.log(res.data, 'rdedit')
+                let editedEmployee = res.data
+                setEmployee(editedEmployee)
                 setExtendEdit('')
                 setUserEditInput('')
                 setFieldToEdit('')
@@ -167,7 +169,7 @@ const Oneemployee = () => {
                             setFieldToEdit('image')
                         }}>Image</button>
                         <button className='p-2 bg-slate-50 rounded-md mx-1' onClick={openModal}>Delete</button>
-                        <ClearIcon sx={{ padding: '2px', backgroundColor: 'gray' }} onClick={handleExtendEdit} />
+                        <ClearIcon sx={{ padding: '4px', backgroundColor: '#f7fafc', borderRadius: '5px', cursor: 'pointer' }} onClick={handleExtendEdit} />
                     </div>
                 }
                 {

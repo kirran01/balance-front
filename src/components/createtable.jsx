@@ -4,13 +4,13 @@ import axios from 'axios';
 
 const Createtable = ({ setShow, id }) => {
     const [tableInput, setTableInput] = useState({
-        regularEarnings: 0,
-        overTime1: 0,
-        overTime2: 0,
-        paye: 0,
-        nationalInsurance: 0,
-        healthSurcharge: 0,
-        other: 0
+        regularEarnings: '',
+        overTime1: '',
+        overTime2: '',
+        paye: '',
+        nationalInsurance: '',
+        healthSurcharge: '',
+        other: ''
     })
     const handleTableInput = (e) => {
         setTableInput({ ...tableInput, [e.target.name]: e.target.value })
@@ -19,13 +19,13 @@ const Createtable = ({ setShow, id }) => {
         e.preventDefault()
         try {
             const res = await axios.post(`http://localhost:3000/table/create-table/${id}`, {
-                regularEarnings: tableInput.regularEarnings,
-                overtimeOne: tableInput.overTime1,
-                overtimeTwo: tableInput.overTime2,
-                paye: tableInput.paye,
-                nationalInsurance: tableInput.nationalInsurance,
-                healthSurcharge: tableInput.healthSurcharge,
-                other: tableInput.other
+                regularEarnings: Number(tableInput.regularEarnings),
+                overtimeOne: Number(tableInput.overTime1),
+                overtimeTwo: Number(tableInput.overTime2),
+                paye: Number(tableInput.paye),
+                nationalInsurance: Number(tableInput.nationalInsurance),
+                healthSurcharge: Number(tableInput.healthSurcharge),
+                other: Number(tableInput.other)
             },
                 {
                     headers: {
