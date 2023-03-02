@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 
-const Createtable = ({ setShow, id }) => {
+const Createtable = ({ setShow, id, tables, setTables }) => {
     const [tableInput, setTableInput] = useState({
         regularEarnings: '',
         overTime1: '',
@@ -15,6 +15,8 @@ const Createtable = ({ setShow, id }) => {
     const handleTableInput = (e) => {
         setTableInput({ ...tableInput, [e.target.name]: e.target.value })
     }
+    console.log(tables[tables.length-1],'ts')
+    
     const createTable = async (e) => {
         e.preventDefault()
         try {
@@ -33,7 +35,18 @@ const Createtable = ({ setShow, id }) => {
                     }
                 })
             if (res) {
-                console.log(res.data, 'rdnewTable')
+                let newTable = res.data
+                setTables([...tables, newTable])
+                setTableInput({
+                    regularEarnings: "",
+                    overTime1: "",
+                    overTime2: "",
+                    paye: "",
+                    nationalInsurance: "",
+                    healthSurcharge: "",
+                    other: "",
+                })
+                setShow('')
             }
         } catch (err) {
             console.log(err)
@@ -41,7 +54,7 @@ const Createtable = ({ setShow, id }) => {
     }
 
     return (
-        <div>
+        <div className='m-2'>
             <form className='flex items-center flex-col border-2 rounded-lg' onSubmit={createTable}>
                 <div className='flex'>
                     <div className='flex flex-col items-center m-2'>

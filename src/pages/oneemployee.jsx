@@ -45,7 +45,6 @@ const Oneemployee = () => {
             setExtendEdit('')
         }
     }
-
     useEffect(() => {
         const getEmployees = async () => {
             try {
@@ -189,7 +188,7 @@ const Oneemployee = () => {
             {
                 show === 'create-table' &&
                 <div>
-                    <Createtable setShow={setShow} id={id} />
+                    <Createtable setShow={setShow} id={id} setTables={setTables} tables={tables} />
                 </div>
             }
             <div>
