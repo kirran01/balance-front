@@ -1,8 +1,50 @@
 import React from 'react';
+import axios from 'axios';
+import { useState } from 'react';
+import { deleteModel } from 'mongoose';
 
-const Prevtable = ({ table }) => {
+const Prevtable = ({ table, tables, setTables }) => {
+    const [extendEdit, setExtendEdit] = useState('')
+    const [fieldToEdit, setFieldToEdit] = useState('')
+    const [userEditInput, setUserEditInput] = useState('')
+    const updateTable = async (e) => {
+        e.preventDefualt()
+        try {
+            const res = await axios.put(`http://localhost:3000/tables/edit-table/${table._id}`, {
+                [fieldToEdit]: userEditInput
+            }, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('authToken')}`
+                }
+            })
+            if (res) {
+                let updatedTable = res.data
+                console.log(updatedTable)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    const deleteTable = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await axios.delete(`http://localhost:3000/table/delete-table/${table._id}`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('authToken')}`
+                }
+            })
+            if (res) {
+                const filteredTables = tables.filter(t => t._id !== table._id)
+                setTables(filteredTables)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <div className='flex border-2 border-slate-100 rounded-lg m-2 p-2'>
+            <button onClick={deleteTable}>Delete</button>
             <div className='m-2'>
                 <div className='flex'>
                     <p className='underline'>{new Date(table.createdOn).toDateString().substring(3)}</p>

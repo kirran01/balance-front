@@ -15,7 +15,6 @@ const Createtable = ({ setShow, id, tables, setTables }) => {
     const handleTableInput = (e) => {
         setTableInput({ ...tableInput, [e.target.name]: e.target.value })
     }
-    console.log(tables[tables.length-1],'ts')
 
     const createTable = async (e) => {
         e.preventDefault();
@@ -84,44 +83,6 @@ const Createtable = ({ setShow, id, tables, setTables }) => {
         }
       };
       
-      
-    
-    // const createTable = async (e) => {
-    //     e.preventDefault()
-    //     try {
-    //         const res = await axios.post(`http://localhost:3000/table/create-table/${id}`, {
-    //             regularEarnings: Number(tableInput.regularEarnings),
-    //             overtimeOne: Number(tableInput.overTime1),
-    //             overtimeTwo: Number(tableInput.overTime2),
-    //             paye: Number(tableInput.paye),
-    //             nationalInsurance: Number(tableInput.nationalInsurance),
-    //             healthSurcharge: Number(tableInput.healthSurcharge),
-    //             other: Number(tableInput.other)
-    //         },
-    //             {
-    //                 headers: {
-    //                     authorization: `Bearer ${localStorage.getItem('authToken')}`
-    //                 }
-    //             })
-    //         if (res) {
-    //             let newTable = res.data
-    //             setTables([...tables, newTable])
-    //             setTableInput({
-    //                 regularEarnings: "",
-    //                 overTime1: "",
-    //                 overTime2: "",
-    //                 paye: "",
-    //                 nationalInsurance: "",
-    //                 healthSurcharge: "",
-    //                 other: "",
-    //             })
-    //             setShow('')
-    //         }
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
-
     return (
         <div className='m-2'>
             <form className='flex items-center flex-col border-2 rounded-lg' onSubmit={createTable}>

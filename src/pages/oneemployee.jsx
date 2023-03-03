@@ -195,7 +195,7 @@ const Oneemployee = () => {
                 {
                     tables.map(t => {
                         return (
-                            <Prevtable key={t._id} table={t} />
+                            <Prevtable key={t._id} table={t} tables={tables} setTables={setTables} />
                         )
                     })
                 }
