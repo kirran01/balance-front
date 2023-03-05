@@ -54,6 +54,10 @@ const Prevtable = ({ table, tables, setTables }) => {
             setFieldToEdit(str)
         }
     }
+    const closeEdit = () => {
+        setUserEditInput('')
+        setFieldToEdit('')
+    }
 
     return (
         <div className='flex flex-col border-2 border-slate-100 rounded-lg m-2 p-4'>
@@ -67,44 +71,126 @@ const Prevtable = ({ table, tables, setTables }) => {
                         <p className='underline'>{new Date(table.createdOn).toDateString().substring(3)}</p>
                     </div>
                     <div className='flex'>
-                        <p className='cursor-pointer' onClick={() => { openInput('regularEarnings') }}>Regular Earnings: </p>
-                        <p className='text-green-500 ml-1'>{table.regularEarnings}</p>
-                        {fieldToEdit === 'regularEarnings' && <form className='flex'>
-                            <input placeholder={`regular earnings: ${table.regularEarnings}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
-                            <button className='p-2 bg-slate-100' type="">Submit</button>
-                            <button onClick={() => { setFieldToEdit('') }}>x</button>
-                        </form>}
+                        {
+                            fieldToEdit !== 'regularEarnings' && <>
+                                <p className='cursor-pointer' onClick={() => { openInput('regularEarnings') }}>Regular Earnings: </p>
+                                <p className='text-green-500 ml-1'>{table.regularEarnings}</p>
+                            </>
+                        }
+                        {
+                            fieldToEdit === 'regularEarnings' &&
+                            <form className='flex'>
+                                <input placeholder={`Regular Earnings: ${table.regularEarnings}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }} />
+                                <button className='p-2 bg-slate-100' type="">Submit</button>
+                                <button onClick={closeEdit}>x</button>
+                            </form>
+                        }
                     </div>
                     <div className='flex'>
-                        <p>Overtime 1: </p>
-                        <p className='text-green-500 ml-1'>{table.overtimeOne}</p>
+                        {
+                            fieldToEdit !== 'overtimeOne' && <>
+                                <p className='cursor-pointer' onClick={() => { openInput('overtimeOne') }}>Overtime 1: </p>
+                                <p className='text-green-500 ml-1'>{table.overtimeOne}</p>
+                            </>
+                        }
+
+                        {
+                            fieldToEdit === 'overtimeOne' &&
+                            <form className='flex'>
+                                <input placeholder={`Overtime 1: ${table.overtimeOne}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
+                                <button className='p-2 bg-slate-100' type="">Submit</button>
+                                <button onClick={closeEdit}>x</button>
+                            </form>
+                        }
                     </div>
                     <div className='flex'>
-                        <p>Overtime 2: </p>
-                        <p className='text-green-500 ml-1'>{table.overtimeTwo}</p>
+                        {
+                            fieldToEdit !== 'overtimeTwo' && <>
+                                <p className='cursor-pointer' onClick={() => { openInput('overtimeTwo') }}>Overtime 2: </p>
+                                <p className='text-green-500 ml-1'>{table.overtimeTwo}</p>
+                            </>
+                        }
+                        {
+                            fieldToEdit === 'overtimeTwo' &&
+                            <form className='flex'>
+                                <input placeholder={`Overtime 2: ${table.overtimeTwo}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
+                                <button className='p-2 bg-slate-100' type="">Submit</button>
+                                <button onClick={closeEdit}>x</button>
+                            </form>
+                        }
                     </div>
                 </div>
                 <div className='m-2'>
                     <div className='flex'>
-                        <p>Health Surcharge:</p>
-                        <p className='text-red-400 ml-1'>{table.healthSurcharge}</p>
+                        {
+                            fieldToEdit !== 'healthSurcharge' && <>
+                                <p className='cursor-pointer' onClick={() => { openInput('healthSurcharge') }}>Health Surcharge:</p>
+                                <p className='text-red-400 ml-1'>{table.healthSurcharge}</p>
+                            </>
+                        }
+                        {
+                            fieldToEdit === 'healthSurcharge' &&
+                            <form className='flex'>
+                                <input placeholder={`Health Surcharge: ${table.healthSurcharge}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
+                                <button className='p-2 bg-slate-100' type="">Submit</button>
+                                <button onClick={closeEdit}>x</button>
+                            </form>
+                        }
                     </div>
                     <div className='flex'>
-                        <p>National Insurance:</p>
-                        <p className='text-red-400 ml-1'>{table.nationalInsurance}</p>
+                        {
+                            fieldToEdit !== 'nationalInsurance' && <>
+                                <p className='cursor-pointer' onClick={() => { openInput('nationalInsurance') }} >National Insurance:</p>
+                                <p className='text-red-400 ml-1'>{table.nationalInsurance}</p>
+                            </>
+                        }
+                        {
+                            fieldToEdit === 'nationalInsurance' &&
+                            <form className='flex'>
+                                <input placeholder={`National Insurance: ${table.nationalInsurance}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
+                                <button className='p-2 bg-slate-100' type="">Submit</button>
+                                <button onClick={closeEdit}>x</button>
+                            </form>
+                        }
                     </div>
                     <div className='flex'>
-                        <p>Paye:</p>
-                        <p className='text-red-400 ml-1'>{table.paye}</p>
+                        {
+                            fieldToEdit !== 'paye' && <>
+                                <p className='cursor-pointer' onClick={() => { openInput('paye') }} >Paye:</p>
+                                <p className='text-red-400 ml-1'>{table.paye}</p>
+                            </>
+                        }
+
+                        {
+                            fieldToEdit === 'paye' &&
+                            <form className='flex'>
+                                <input placeholder={`Paye: ${table.paye}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
+                                <button className='p-2 bg-slate-100' type="">Submit</button>
+                                <button onClick={closeEdit}>x</button>
+                            </form>
+                        }
                     </div>
                     <div className='flex'>
-                        <p>Other:</p>
-                        <p className='text-red-400 ml-1'>{table.other}</p>
+                        {
+                            fieldToEdit !== 'other' &&
+                            <>
+                                <p p className='cursor-pointer' onClick={() => { openInput('other') }}>Other:</p>
+                                <p className='text-red-400 ml-1'>{table.other}</p>
+                            </>
+                        }
+                        {
+                            fieldToEdit === 'other' &&
+                            <form className='flex'>
+                                <input placeholder={`Other: ${table.other}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
+                                <button className='p-2 bg-slate-100' type="">Submit</button>
+                                <button onClick={closeEdit}>x</button>
+                            </form>
+                        }
                     </div>
                 </div>
             </div>
 
-        </div>
+        </div >
     );
 }
 
