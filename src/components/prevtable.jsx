@@ -1,18 +1,19 @@
 import React from 'react';
 import axios from 'axios';
+import ClearIcon from '@mui/icons-material/Clear';
 import { useState } from 'react';
 import { deleteModel } from 'mongoose';
 
-const Prevtable = ({ table, tables, setTables }) => {
+const Prevtable = ({ table, tables, setTables, i }) => {
 
     const [editMode, setEditMode] = useState(false)
     const [fieldToEdit, setFieldToEdit] = useState('')
     const [userEditInput, setUserEditInput] = useState('')
     const updateTable = async (e) => {
-        e.preventDefualt()
+        e.preventDefault()
         try {
-            const res = await axios.put(`http://localhost:3000/tables/edit-table/${table._id}`, {
-                [fieldToEdit]: userEditInput
+            const res = await axios.put(`http://localhost:3000/table/update-table/${table._id}`, {
+                [fieldToEdit]: i == 0 ? userEditInput : userEditInput - tables[i - 1][fieldToEdit]
             }, {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('authToken')}`
@@ -21,6 +22,15 @@ const Prevtable = ({ table, tables, setTables }) => {
             if (res) {
                 let updatedTable = res.data
                 console.log(updatedTable)
+                let updatedTables = tables.map(t => {
+                    if (t._id === updatedTable._id) {
+                        return updatedTable
+                    } else {
+                        return t
+                    }
+                })
+                setTables(updatedTables)
+                closeEdit()
             }
         } catch (err) {
             console.log(err)
@@ -42,13 +52,6 @@ const Prevtable = ({ table, tables, setTables }) => {
             console.log(err)
         }
     }
-    const handleEditMode = () => {
-        if (editMode) {
-            setEditMode(false)
-        } else {
-            setEditMode(true)
-        }
-    }
     const openInput = (str) => {
         if (editMode) {
             setFieldToEdit(str)
@@ -57,6 +60,15 @@ const Prevtable = ({ table, tables, setTables }) => {
     const closeEdit = () => {
         setUserEditInput('')
         setFieldToEdit('')
+        setEditMode(false)
+    }
+    const handleEditMode = () => {
+        if (editMode) {
+            closeEdit()
+            setEditMode(false)
+        } else {
+            setEditMode(true)
+        }
     }
 
     return (
@@ -79,10 +91,10 @@ const Prevtable = ({ table, tables, setTables }) => {
                         }
                         {
                             fieldToEdit === 'regularEarnings' &&
-                            <form className='flex'>
-                                <input placeholder={`Regular Earnings: ${table.regularEarnings}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }} />
-                                <button className='p-2 bg-slate-100' type="">Submit</button>
-                                <button onClick={closeEdit}>x</button>
+                            <form className='flex' onSubmit={updateTable}>
+                                <input placeholder={`Regular Earnings: ${table.regularEarnings}`} className='border-2 h-8 border-slate-100 rounded-lg' type="number" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }} />
+                                <button className='m-1' type="submit">✅</button>
+                                <button className='m-1' onClick={closeEdit}>❌</button>
                             </form>
                         }
                     </div>
@@ -96,10 +108,10 @@ const Prevtable = ({ table, tables, setTables }) => {
 
                         {
                             fieldToEdit === 'overtimeOne' &&
-                            <form className='flex'>
-                                <input placeholder={`Overtime 1: ${table.overtimeOne}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
-                                <button className='p-2 bg-slate-100' type="">Submit</button>
-                                <button onClick={closeEdit}>x</button>
+                            <form className='flex' onSubmit={updateTable}>
+                                <input placeholder={`Overtime 1: ${table.overtimeOne}`} className='border-2 h-8 border-slate-100 rounded-lg' type="number" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }} />
+                                <button className='m-1' type="submit">✅</button>
+                                <button className='m-1' onClick={closeEdit}>❌</button>
                             </form>
                         }
                     </div>
@@ -112,10 +124,10 @@ const Prevtable = ({ table, tables, setTables }) => {
                         }
                         {
                             fieldToEdit === 'overtimeTwo' &&
-                            <form className='flex'>
-                                <input placeholder={`Overtime 2: ${table.overtimeTwo}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
-                                <button className='p-2 bg-slate-100' type="">Submit</button>
-                                <button onClick={closeEdit}>x</button>
+                            <form className='flex' onSubmit={updateTable}>
+                                <input placeholder={`Overtime 2: ${table.overtimeTwo}`} className='border-2 h-8 border-slate-100 rounded-lg' type="number" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }} />
+                                <button className='m-1' type="submit">✅</button>
+                                <button className='m-1' onClick={closeEdit}>❌</button>
                             </form>
                         }
                     </div>
@@ -130,10 +142,10 @@ const Prevtable = ({ table, tables, setTables }) => {
                         }
                         {
                             fieldToEdit === 'healthSurcharge' &&
-                            <form className='flex'>
-                                <input placeholder={`Health Surcharge: ${table.healthSurcharge}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
-                                <button className='p-2 bg-slate-100' type="">Submit</button>
-                                <button onClick={closeEdit}>x</button>
+                            <form className='flex' onSubmit={updateTable}>
+                                <input placeholder={`Health Surcharge: ${table.healthSurcharge}`} className='border-2 h-8 border-slate-100 rounded-lg' type="number" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }} />
+                                <button className='m-1' type="submit">✅</button>
+                                <button className='m-1' onClick={closeEdit}>❌</button>
                             </form>
                         }
                     </div>
@@ -146,10 +158,10 @@ const Prevtable = ({ table, tables, setTables }) => {
                         }
                         {
                             fieldToEdit === 'nationalInsurance' &&
-                            <form className='flex'>
-                                <input placeholder={`National Insurance: ${table.nationalInsurance}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
-                                <button className='p-2 bg-slate-100' type="">Submit</button>
-                                <button onClick={closeEdit}>x</button>
+                            <form className='flex' onSubmit={updateTable}>
+                                <input placeholder={`National Insurance: ${table.nationalInsurance}`} className='border-2 h-8 border-slate-100 rounded-lg' type="number" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }} />
+                                <button className='m-1' type="submit">✅</button>
+                                <button className='m-1' onClick={closeEdit}>❌</button>
                             </form>
                         }
                     </div>
@@ -163,10 +175,10 @@ const Prevtable = ({ table, tables, setTables }) => {
 
                         {
                             fieldToEdit === 'paye' &&
-                            <form className='flex'>
-                                <input placeholder={`Paye: ${table.paye}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
-                                <button className='p-2 bg-slate-100' type="">Submit</button>
-                                <button onClick={closeEdit}>x</button>
+                            <form className='flex' onSubmit={updateTable}>
+                                <input placeholder={`Paye: ${table.paye}`} className='border-2 h-8 border-slate-100 rounded-lg' type="number" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }} />
+                                <button className='m-1' type="submit">✅</button>
+                                <button className='m-1' onClick={closeEdit}>❌</button>
                             </form>
                         }
                     </div>
@@ -180,10 +192,10 @@ const Prevtable = ({ table, tables, setTables }) => {
                         }
                         {
                             fieldToEdit === 'other' &&
-                            <form className='flex'>
-                                <input placeholder={`Other: ${table.other}`} className='border-2 h-8 border-slate-100 rounded-lg' type="text" />
-                                <button className='p-2 bg-slate-100' type="">Submit</button>
-                                <button onClick={closeEdit}>x</button>
+                            <form className='flex' onSubmit={updateTable}>
+                                <input placeholder={`Other: ${table.other}`} className='border-2 h-8 border-slate-100 rounded-lg' type="number" value={userEditInput} onChange={(e) => { setUserEditInput(e.target.value) }} />
+                                <button className='m-1' type="submit">✅</button>
+                                <button className='m-1' onClick={closeEdit}>❌</button>
                             </form>
                         }
                     </div>

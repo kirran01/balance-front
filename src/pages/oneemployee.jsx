@@ -20,6 +20,40 @@ const Oneemployee = () => {
     const [tables, setTables] = useState([])
     const [show, setShow] = useState('')
     const [modalIsOpen, setIsOpen] = useState(false);
+
+
+    let initialVal = {
+        regularEarnings: 0,
+        overtimeOne: 0,
+        overtimeTwo: 0,
+        paye: 0,
+        nationalInsurance: 0,
+        healthSurcharge: 0,
+        other: 0
+    }
+    const tablesWCumulativeEarnings = []
+    const cumulativeEarnings = tables.reduce((accum, table, i) => {
+        const { regularEarnings,
+            overtimeOne,
+            overtimeTwo,
+            paye,
+            nationalInsurance,
+            healthSurcharge,
+            other } = accum
+        accum = {
+            regularEarnings: regularEarnings + table.regularEarnings,
+            overtimeOne: overtimeOne + table.overtimeOne,
+            overtimeTwo: overtimeTwo + table.overtimeTwo,
+            paye: paye + table.paye,
+            nationalInsurance: nationalInsurance + table.nationalInsurance,
+            healthSurcharge: healthSurcharge + table.healthSurcharge,
+            other: other + table.other
+        }
+        tablesWCumulativeEarnings.push({ ...accum, _id: tables[i]._id, createdOn: tables[i].createdOn, employee: tables[i].employee })
+        return accum
+    }, initialVal)
+    console.log(tablesWCumulativeEarnings, 'twce')
+
     function openModal() {
         setIsOpen(true);
     }
@@ -193,9 +227,9 @@ const Oneemployee = () => {
             }
             <div>
                 {
-                    tables.map(t => {
+                    tablesWCumulativeEarnings.map((t, i) => {
                         return (
-                            <Prevtable key={t._id} table={t} tables={tables} setTables={setTables} />
+                            <Prevtable key={t._id} table={t} tables={tables} setTables={setTables} i={i} />
                         )
                     })
                 }
